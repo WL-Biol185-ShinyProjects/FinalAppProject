@@ -15,7 +15,7 @@ pacific <- read.csv("https://github.com/merhiger20/FinalAppProject/blob/master/p
 #merge the two data sets
 globalHurricane <- rbind(atlantic, pacific)
 
-#making a static hurricane tracking map (for atlantic data)
+#making a static hurricane tracking map (for atlantic data)... need to incorporate drop-down menu so it appears as one hurricane at a time
   
 globalHurricane_box <- make_bbox(lon = globalHurricane$Longitude, lat = globalHurricane$Latitude, f = 0.5)
 sq_map <- get_map(location = globalHurricane_box, maptype = "satellite", source = "google", zoom = 5)
@@ -30,7 +30,7 @@ p <- ggmap(sq_map) +
     x = "Longitude", y = "Latitude")
   NULL
 
-#animated tracking map
+#animated tracking map ... need to incorporate drop-down menu so it appears as one hurricane at a time
   ani <- ggmap(sq_map) + 
     theme(text = element_text(size = 17))+
     geom_point(data = globalHurricane, mapping = aes(x = long, y = lat, color = Maximum_Wind)) +
