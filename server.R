@@ -15,26 +15,27 @@ pacific <- read.csv("https://github.com/merhiger20/FinalAppProject/blob/master/p
 #merge the two data sets
 globalHurricane <- rbind(atlantic, pacific)
 
-#making a static hurricane tracking map (for atlantic data)... need to incorporate drop-down menu so it appears as one hurricane at a time
+#making a static hurricane tracking map (for atlantic data)... I think I fixed this:(need to incorporate drop-down menu so it appears as one hurricane at a time)
   
-globalHurricane_box <- make_bbox(lon = globalHurricane$Longitude, lat = globalHurricane$Latitude, f = 0.5)
-sq_map <- get_map(location = globalHurricane_box, maptype = "satellite", source = "google", zoom = 5)
+selectedHurricane_box <- make_bbox(lon = selectedHurricane$Longitude, lat = selectedHurricane$Latitude, f = 0.5)
+sq_map <- get_map(location = selectedHurricane_box, maptype = "satellite", source = "google", zoom = 5)
 
-p <- ggmap(sq_map) +
-    geom_point(data = globalHurricane, mapping = aes(x = long, y = lat, color = Maximum_Wind)) +
-    geom_line(data = globalHurricane, mapping = aes(x= long, y =lat, color = Maximum_Wind)) +
+staticMap <- ggmap(sq_map) +
+    geom_point(data = selectedHurricane, mapping = aes(x = long, y = lat, color = Maximum_Wind)) +
+    geom_line(data = selectedHurricane, mapping = aes(x= long, y =lat, color = Maximum_Wind)) +
     scale_color_continuous(name = "Maximum Wind Speed (mph)", low = "yellow", high = "red") +
   
 #?need to fiugre out how to change title according to which hurricane was selected from drop-down box  
     labs(title = "Tracking of Hurricane X",
-    x = "Longitude", y = "Latitude")
-  NULL
+    x = "Longitude", y = "Latitude",
+  NULL)
+staticMap
 
-#animated tracking map ... need to incorporate drop-down menu so it appears as one hurricane at a time
+#animated tracking map ... I think I fixed this:(need to incorporate drop-down menu so it appears as one hurricane at a time)
   ani <- ggmap(sq_map) + 
     theme(text = element_text(size = 17))+
-    geom_point(data = globalHurricane, mapping = aes(x = long, y = lat, color = Maximum_Wind)) +
-    geom_line(data = globalHurricane, mapping = aes(x = long, y = lat, color = Maximum_Wind), size = 2) +
+    geom_point(data = selectedHurricane, mapping = aes(x = long, y = lat, color = Maximum_Wind)) +
+    geom_line(data = selectedHurricane, mapping = aes(x = long, y = lat, color = Maximum_Wind), size = 2) +
     scale_color_continuous(name = "Maximum Wind Speed",low = "yellow", high = "red")+
     
 #?need to fiugre out how to change title according to which hurricane was selected from drop-down box 
@@ -42,7 +43,5 @@ p <- ggmap(sq_map) +
          subtitle = "Time:{frame_time}",
           x = "Longitude", y = "Latitude", 
          transition_reveal(1,time)+
-    NULL
+    NULL)
     
-  # embed the animation in rmarkdown. 
-  animate(ani, renderer = ffmpeg_renderer())

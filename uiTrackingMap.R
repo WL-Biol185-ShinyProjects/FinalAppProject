@@ -1,6 +1,8 @@
 library(shiny)
 
 fluidPage(
-    selectInput("pickHurricane", "Select a hurricane",
-                list("Name" = list("EDOUARD", )
-)
+    selectInput("selectedHurricane", "Select a hurricane", choices = globalHurricane %<% pull("Name") 
+               ),
+   
+
+    )
