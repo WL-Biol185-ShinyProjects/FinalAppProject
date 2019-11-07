@@ -13,10 +13,9 @@ ui <- pageWithSidebar(
     sidebar <- dashboardSidebar(
       sidebarMenu(
         menuItem("Dashboard", tabName = "dashboard"),
-        menuItem("Storm Map", tabName = "stormMap",
-        )
-      )
-    ),
+        menuItem("Storm Map", tabName = "stormMap")
+         )
+      ),
     
     body <- dashboardBody(
       tabItems(
@@ -28,7 +27,8 @@ ui <- pageWithSidebar(
                 "Storm map tab content"
         )
       )
-    ),
+    )
+  ),
     
     # Put them together into a dashboardPage
     dashboardPage(
@@ -36,7 +36,6 @@ ui <- pageWithSidebar(
       sidebar,
       body
     )
-  )
 )
 
 shinyApp(ui, server)
