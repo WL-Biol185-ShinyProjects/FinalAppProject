@@ -1,7 +1,7 @@
 library(shiny)
 
 
-fluidPage(
+ui <- fluidPage(
   
   titlePanel("Mapping Individual Hurricanes by Path and Wind Speed"),
   
@@ -9,10 +9,10 @@ fluidPage(
     
   sidebarPanel(
   
-      selectInput("selectedHurricane", "Select a hurricane", choices = globalHurricane %<% colnames(Name)
+      selectInput("selectedHurricane", "Select a hurricane", choices = name_list_1967
                  ),
       hr(),
-      helpText("Data from... ") #need to cite the source for our data
+      helpText("Data from National Hurricane Center") 
               ),
               ),
   mainPanel(
