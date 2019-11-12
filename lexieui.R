@@ -4,39 +4,41 @@ library(shinydashboard)
 # Define UI for hurricane app ----
 ui <- pageWithSidebar(
   
-  # App title ----
-  headerPanel("History of Hurricanes"),
-  
   #Create dashboard 
   dashboardPage(
-    dashboardHeader(disable = TRUE),
-    sidebar <- dashboardSidebar(
+    dashboardHeader(),
+    dashboardSidebar(
       sidebarMenu(
         menuItem("Dashboard", tabName = "dashboard"),
         menuItem("Storm Map", tabName = "stormMap")
          )
       ),
     
-    body <- dashboardBody(
+    title = "History of Hurricanes",
+    
+    dashboardBody(
+      tags$head(tags$style(HTML('
+      .main-header .logo {
+        font-family: "Georgia", Times, "Times New Roman", serif;
+        font-weight: bold;
+        font-size: 24px;
+      }
+    '))),
+      
       tabItems(
         tabItem(tabName = "dashboard",
-                "Dashboard tab content"
+                "In a state of growing knowledge and concern regarding climate change, our app allows users to visualize the direction and severity of major storms since 1850. It is our hope that with more data collected
+                    and visualizations such as ours, we will eventually be able to predict storms based on their origin and past conditions.
+                
+                Image credit to: http://discovermagazine.com/2019/july/ewk-hurricanes")
         ),
         
         tabItem(tabName = "stormMap",
-                "Storm map tab content"
-        )
-      )
-    )
-  ),
+                "Storm map tab content",
+                
+          ))))
     
-    # Put them together into a dashboardPage
-    dashboardPage(
-      dashboardHeader(title = "Simple tabs"),
-      sidebar,
-      body
-    )
-)
+
 
 shinyApp(ui, server)
 
