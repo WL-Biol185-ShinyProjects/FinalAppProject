@@ -2,12 +2,12 @@ library(shiny)
 library(ggplot2)
 
 #things needed for hurricane map and animation
-require(gganimate)
-require(tidyverse)
-require(lubridate) 
-require(ggmap)
-require(mapdata)
-require(maps)
+library(gganimate)
+library(tidyverse)
+library(lubridate) 
+library(ggmap)
+library(mapdata)
+library(maps)
 
 #importing dataset to work with
 atlantic <- read.csv("https://github.com/merhiger20/FinalAppProject/blob/master/atlantic.csv")
@@ -30,14 +30,15 @@ globalHurricane$monthStr <- NULL
 globalHurricane$dayStr <- NULL
 
 
-
-
 #not enough data to track hurricanes before 1967 in a visually appealing way: this should cut off dates before 1967
-name_list_1967 <- (globalHurricane %>% 
-                    filter(Year > 1967) %>%
-                    group_by(Year, ID)  %>% 
-                    select(Name, Year, ID, Longitude, Latitude, Time) %>% 
-                    distinct(.keep_all = TRUE))
+name_list_1967 <- globalHurricane %>%
+  filter( NAME != "UNNAMED" & Year > 1967)
+
+#name_list_1967 <- (globalHurricane %>% 
+                    #filter(Year > 1967) %>%
+                    #group_by(Year, ID)  %>% 
+                    #select(Name, Year, ID, Longitude, Latitude, Time) %>% 
+                    #distinct(.keep_all = TRUE))
                    # summarise(new_name = if_else(Name == 'Unnamed', 
                                                 # paste0('Unnamed:', ID, ' (', Year, ')'), 
                                                 # paste0(Name, ' (', Year,')' ))) %>% 
@@ -50,10 +51,11 @@ name_list_1967 <- (globalHurricane %>%
 server<- function(input, output) {
 
 #making a static hurricane tracking map (for atlantic data)... I think I fixed this:(need to incorporate drop-down menu so it appears as one hurricane at a time)
-selectedHurricane_box <- make_bbox(lon = selectedHurricane$Longitude, lat = selectedHurricane$Latitude, f = 0.5)
-sq_map <- get_map(location = selectedHurricane_box, maptype = "satellite", source = "google", zoom = 5)
+  output$staticmap <- renderplot({
+  selectedHurricane_box <- make_bbox(lon = selectedHurricane$Longitude, lat = selectedHurricane$Latitude, f = 0.5)
+  sq_map <- get_map(location = selectedHurricane_box, maptype = "satellite", source = "google", zoom = 5)
 
-staticMap <- ggmap(sq_map) +
+  staticMap <- ggmap(sq_map) +
     geom_point(data = selectedHurricane, mapping = aes(x = lon, y = lat, color = Maximum_Wind)) +
     geom_line(data = selectedHurricane, mapping = aes(x= lon, y =lat, color = Maximum_Wind)) +
     scale_color_continuous(name = "Maximum Wind Speed (mph)", low = "yellow", high = "red") +
@@ -61,9 +63,9 @@ staticMap <- ggmap(sq_map) +
 #?need to fiugre out how to change title according to which hurricane was selected from drop-down box  
     labs(title = "Tracking of Hurricane X",
     x = "Longitude", y = "Latitude",
-  NULL)
-staticMap
-
+    NULL)
+  })
+  
 }
 
 #animated tracking map ... I think I fixed this:(need to incorporate drop-down menu so it appears as one hurricane at a time)
@@ -80,4 +82,6 @@ staticMap
          transition_reveal(1,time)+
     NULL)
   
+  
+ 
   
