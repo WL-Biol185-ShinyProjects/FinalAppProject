@@ -16,16 +16,19 @@ pacific <- read.csv("https://github.com/merhiger20/FinalAppProject/blob/master/p
 #merge the two data sets
 globalHurricane <- rbind(atlantic, pacific)
 
-#adding Date and Month Column as Numeric values to "globalHurricane" dataframe  
+#adding Year, Month, and Day Column as Numeric values to "globalHurricane" dataframe  
 
-globalHurricane <- read.csv("globalHurricane.csv")
 globalHurricane$dateStr <- as.character(globalHurricane$Date)
-globalHurricane$dateStr <- substr(as.character(globalHurricane$Date), start = 1, stop = 4)
+globalHurricane$yearStr <- substr(as.character(globalHurricane$Date), start = 1, stop = 4)
 globalHurricane$monthStr <- substr(as.character(globalHurricane$Date), start = 5, stop = 6)
+globalHurricane$dayStr <- substr(as.character(globalHurricane$Date), start = 7, stop = 8)
 globalHurricane$Month <- as.numeric(globalHurricane$monthStr)
-globalHurricane$Year <- as.numeric(globalHurricane$dateStr)
-globalHurricane$dateStr <- NULL
+globalHurricane$Year <- as.numeric(globalHurricane$yearStr)
+globalHurricane$Day <- as.numeric(globalHurricane$dayStr)
+globalHurricane$yearStr <- NULL
 globalHurricane$monthStr <- NULL 
+globalHurricane$dayStr <- NULL
+
 
 
 
@@ -33,7 +36,7 @@ globalHurricane$monthStr <- NULL
 name_list_1967 <- (globalHurricane %>% 
                     filter(Year > 1967) %>%
                     group_by(Year, ID)  %>% 
-                    select(Name, Year, ID, Longitude, Latitude) %>% 
+                    select(Name, Year, ID, Longitude, Latitude, Time) %>% 
                     distinct(.keep_all = TRUE))
                    # summarise(new_name = if_else(Name == 'Unnamed', 
                                                 # paste0('Unnamed:', ID, ' (', Year, ')'), 
