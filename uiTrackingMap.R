@@ -9,7 +9,10 @@ ui <- fluidPage(
     
   sidebarPanel(
   
-      selectInput("selectedHurricane", "Select a hurricane", choices = name_list_1967
+      selectInput(
+          inputId = "selectedHurricane",
+          label = "Select a hurricane",
+          choices = unique(name_list_1967)
                  ),
       hr(),
       helpText("Data from National Hurricane Center") 
