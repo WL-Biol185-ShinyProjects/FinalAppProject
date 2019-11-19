@@ -8,16 +8,16 @@ library(mapdata)
 library(maps)
 
 #importing dataset to work with
-atlantic <- read.csv("https://github.com/merhiger20/FinalAppProject/blob/master/atlantic.csv")
-pacific <- read.csv("https://github.com/merhiger20/FinalAppProject/blob/master/pacific.csv")
+atlantic <- read.csv("atlantic.csv")
+pacific <- read.csv("pacific.csv")
 
 #merge the two data sets
 globalHurricane <- rbind(atlantic, pacific)
 
 #adding Year, Month, and Day Column as Numeric values to "globalHurricane" dataframe  
 
-globalHurricane$dateStr <- as.character(globalHurricane$Date)
-globalHurricane$dateStr <- substr(as.character(globalHurricane$Date), start = 1, stop = 4)
+globalHurricane$DateStr <- as.character(globalHurricane$Date)
+globalHurricane$yearStr <- substr(as.character(globalHurricane$Date), start = 1, stop = 4)
 globalHurricane$monthStr <- substr(as.character(globalHurricane$Date), start = 5, stop = 6)
 globalHurricane$dayStr <- substr(as.character(globalHurricane$Date), start = 7, stop = 8)
 globalHurricane$Month <- as.numeric(globalHurricane$monthStr)
@@ -28,7 +28,10 @@ globalHurricane$monthStr <- NULL
 globalHurricane$dayStr <- NULL
 
 name_list_1967 <- globalHurricane %>%
-  filter( NAME != "UNNAMED" & Year > 1967)
+  filter(Year > 1967) %>%
+  filter(Name != "UNNAMED")
+
+                  
 
 ui <- fluidPage(
   
@@ -36,7 +39,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     
-  sidebarPanel(
+    sidebarPanel(
   
       selectInput(
           inputId = "selectedHurricane",
@@ -46,9 +49,13 @@ ui <- fluidPage(
       hr(),
       helpText("Data from National Hurricane Center") 
               ),
-              ),
-  mainPanel(
-    plotOutput("staticMap")
+              
+    mainPanel(
+      plotOutput("staticMap")
            )
-    )
+  )
+)
+
+
+
 
