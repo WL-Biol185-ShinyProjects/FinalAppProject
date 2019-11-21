@@ -13,14 +13,16 @@ name_list_1967 <- read.csv("name_list_1967.csv")
 
 server<- function(input, output) {
 
-  input(selectedHurricane)
+
   
-#selectedHurricane from the ui only calls the name of a hurricane, but I want the latitude and longitude associated with that hurricane across time so I need to filter out that data again
-  selectedHurricaneData <- name_list_1967 %>%
-    filter(Name = selectedHurricane)
   
-#making a static hurricane tracking map (for atlantic data)
+#making a static hurricane tracking map 
   output$staticmap <- renderplot({
+
+#selectedHurricane from the ui only calls the name of a hurricane, but I want the latitude and longitude associated with that hurricane across time so I need to filter out that data again        
+selectedHurricaneData <- name_list_1967 %>%
+      filter(Name == input$selectedHurricane)
+
   selectedHurricaneData_box <- make_bbox(lon = selectedHurricaneData$Longitude, lat = selectedHurricaneData$Latitude, f = 0.5)
   sq_map <- get_map(location = selectedHurricaneData_box, maptype = "satellite", source = "google", zoom = 5)
 
