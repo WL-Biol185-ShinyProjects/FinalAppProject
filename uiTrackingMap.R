@@ -6,6 +6,7 @@ library(lubridate)
 library(ggmap)
 library(mapdata)
 library(maps)
+library(dplyr)
 
 #importing dataset to work with
 atlantic <- read.csv("atlantic.csv")
@@ -27,9 +28,10 @@ globalHurricane$yearStr <- NULL
 globalHurricane$monthStr <- NULL 
 globalHurricane$dayStr <- NULL
 
+
 name_list_1967 <- globalHurricane %>%
   filter(Year > 1967) %>%
-  filter(Name != "UNNAMED")
+  filter(Name != "            UNNAMED")
 
                   
 

@@ -1,13 +1,12 @@
 library(shiny)
 library(ggplot2)
-
-#things needed for hurricane map and animation
 library(gganimate)
 library(tidyverse)
 library(lubridate) 
 library(ggmap)
 library(mapdata)
 library(maps)
+library(dplyr)
 
 #importing dataset to work with
 atlantic <- read.csv("atlantic.csv")
@@ -17,7 +16,6 @@ pacific <- read.csv("pacific.csv")
 globalHurricane <- rbind(atlantic, pacific)
 
 #adding Year, Month, and Day Column as Numeric values to "globalHurricane" dataframe. Import formatting is as a factor  
-
 globalHurricane$DateStr <- as.character(globalHurricane$Date)
 globalHurricane$yearStr <- substr(as.character(globalHurricane$Date), start = 1, stop = 4)
 globalHurricane$monthStr <- substr(as.character(globalHurricane$Date), start = 5, stop = 6)
@@ -30,11 +28,10 @@ globalHurricane$monthStr <- NULL
 globalHurricane$dayStr <- NULL
 
 
-#not enough data to track hurricanes before 1967 in a visually appealing way: this should cut off dates before 1967
+#not enough data to track hurricanes before 1967 in a visually appealing way: this should cut off dates before 1967 and eliminate hurricanes that are unnamed
 name_list_1967 <- globalHurricane %>%
   filter(Year > 1967) %>%
-  filter(Name != "UNNAMED")
-
+  filter(Name != "            UNNAMED")
 
 server<- function(input, output) {
 
