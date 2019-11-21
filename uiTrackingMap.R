@@ -1,5 +1,15 @@
 library(shiny)
+library(ggplot2)
+library(gganimate)
+library(tidyverse)
+library(lubridate) 
+library(ggmap)
+library(mapdata)
+library(maps)
+library(dplyr)
 
+#loading relevant csv file
+name_list_1967 <- read.csv("name_list_1967.csv")
 
 ui <- fluidPage(
   
@@ -7,7 +17,7 @@ ui <- fluidPage(
   
   sidebarLayout(
     
-  sidebarPanel(
+    sidebarPanel(
   
       selectInput(
           inputId = "selectedHurricane",
@@ -17,9 +27,13 @@ ui <- fluidPage(
       hr(),
       helpText("Data from National Hurricane Center") 
               ),
-              ),
-  mainPanel(
-    plotOutput("staticMap")
+              
+    mainPanel(
+      plotOutput("staticMap")
            )
-    )
+  )
+)
+
+
+
 
