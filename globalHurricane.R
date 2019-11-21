@@ -22,3 +22,10 @@ globalHurricane$monthStr <- NULL
 globalHurricane$dayStr <- NULL
 
 write.csv(globalHurricane, file = "globalHurricane.csv")
+
+#not enough data to track hurricanes before 1967 in a visually appealing way: this should cut off dates before 1967 and eliminate hurricanes that are unnamed
+name_list_1967 <- globalHurricane %>%
+  filter(Year > 1967) %>%
+  filter(Name != "            UNNAMED")
+
+write.csv(name_list_1967, file = "name_list_1967.csv")
