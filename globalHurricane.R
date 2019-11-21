@@ -21,5 +21,4 @@ globalHurricane$yearStr <- NULL
 globalHurricane$monthStr <- NULL 
 globalHurricane$dayStr <- NULL
 
-write.table(globalHurricane)
-write.csv(globalHurricane)
+write.csv(globalHurricane, file = "globalHurricane.csv")
