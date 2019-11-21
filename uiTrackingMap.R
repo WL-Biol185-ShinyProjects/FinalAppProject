@@ -11,11 +11,11 @@ library(dplyr)
 #loading relevant csv file
 name_list_1967 <- read.csv("name_list_1967.csv")
 
-ui <- fluidPage(
+  ui <- fluidPage(
   
-  titlePanel("Mapping Individual Hurricanes by Path and Wind Speed"),
+    titlePanel("Mapping Individual Hurricanes by Path and Wind Speed"),
   
-  sidebarLayout(
+    sidebarLayout(
     
     sidebarPanel(
   
