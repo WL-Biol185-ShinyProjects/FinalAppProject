@@ -17,20 +17,20 @@ name_list_1967 <- read.csv("name_list_1967.csv")
   
     sidebarLayout(
     
-    sidebarPanel(
+      sidebarPanel(
   
-      selectInput(
-          inputId = "selectedHurricane",
-          label = "Select a hurricane",
-          choices = unique(name_list_1967$Name)
-                 ),
-      hr(),
-      helpText("Data from National Hurricane Center") 
-              ),
+        selectInput(
+            inputId = "selectedHurricane",
+            label = "Select a hurricane",
+            choices = unique(name_list_1967$Name)
+         ),
+        hr(),
+        helpText("Data from National Hurricane Center") 
+      ),
               
-    mainPanel(
-      plotOutput("staticMap")
-           )
+      mainPanel(
+        plotOutput("staticMap")
+      )
   )
 )
 
