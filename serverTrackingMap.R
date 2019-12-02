@@ -8,6 +8,12 @@ library(mapdata)
 library(maps)
 library(dplyr)
 
+#save api key
+register_google(key = "YOUR API KEY")
+
+#check to see if key is saved
+has_google_key()
+
 #loading relevant csv file: all named hurricanes in both the atlantic and the pacific after the year 1967 
 name_list_1967 <- read.csv("name_list_1967.csv")
 
@@ -22,7 +28,7 @@ name_list_1967 <- read.csv("name_list_1967.csv")
 
         selectedHurricaneData_box <- make_bbox(lon = selectedHurricaneData$LongitudeNumRight, lat = selectedHurricaneData$LatitudeNumRight, f = 0.5)
         
-        sq_map <- get_map(location = selectedHurricaneData_box, maptype = "satellite", source = "google", zoom = 5)
+        sq_map <- get_map(location = selectedHurricaneData_box, zoom = 5, source = "google", maptype = "satellite" ) 
 
         staticMap <- ggmap(sq_map) +
           geom_point(data = selectedHurricaneData, mapping = aes(x = lon, y = lat, color = Maximum_Wind)) +
@@ -52,7 +58,7 @@ name_list_1967 <- read.csv("name_list_1967.csv")
   
   
   
-
+      
 
   
  
