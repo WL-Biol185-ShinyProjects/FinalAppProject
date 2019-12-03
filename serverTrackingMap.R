@@ -20,9 +20,16 @@ server<- function(input, output) {
     selectedHurricaneData <- name_list_1967 %>%
       filter(Name == input$selectedHurricane)
     
+    pal <- colorFactor(c("red", "orange", "yellow"), domain = c("HU","TS", "TD"))
+    
     leaflet(data = selectedHurricaneData) %>% 
       addTiles() %>%
-      addCircles(radius = 160934) 
+      addCircles(radius = ~Maximum.WindNumeric *2285.71429,
+                 fillColor = ~pal(selectedHurricaneData$Status),
+                 label = ~selectedHurricaneData$Maximum.WindNumeric)
+    
+                 
+      
                  
       
     
