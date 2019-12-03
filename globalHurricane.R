@@ -23,10 +23,11 @@ globalHurricane <- rbind(atlantic, pacific)
   
   #need to convert latitude and longitude into numeric values without NSEW in order for make_bbox to recognize them; realized they are all NW points so all longitudes just need to be turned negative and latitudes can remain the same
   globalHurricane$LongitudeNumWrong <- as.numeric(substr(as.character(globalHurricane$Longitude), start = 1, stop =4))
-  globalHurricane$LongitudeNumRight <-  globalHurricane$LongitudeNumWrong *-1
-  globalHurricane$LongitudeNumWrong <- NULL
+  globalHurricane$lon <-  globalHurricane$LongitudeNumWrong *-1
+  globalHurricane$Longitude <- NULL
   
-  globalHurricane$LatitudeNumRight <- as.numeric(substr(as.character(globalHurricane$Latitude), start = 1, stop =4))
+  globalHurricane$lat <- as.numeric(substr(as.character(globalHurricane$Latitude), start = 1, stop =4))
+  globalHurricane$Latitude <-NULL
   
   #need to convert max windspeed as a numeric as well
   globalHurricane$Maximum.WindNumeric <- as.numeric(globalHurricane$Maximum.Wind)
