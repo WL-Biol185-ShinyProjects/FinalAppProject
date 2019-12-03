@@ -20,19 +20,16 @@ server<- function(input, output) {
     selectedHurricaneData <- name_list_1967 %>%
       filter(Name == input$selectedHurricane)
     
-    pal <- colorFactor(c("red", "orange", "yellow"), domain = c("HU","TS", "TD"))
+    pal = colorFactor(palette = c("red", "orange", "yellow"), domain = selectedHurricaneData$Status)
     
     leaflet(data = selectedHurricaneData) %>% 
-      addTiles() %>%
-      addCircles(radius = ~Maximum.WindNumeric *2285.71429,
+      addProviderTiles("Esri.WorldImagery") %>%
+      addCircles(radius = ~Maximum.WindNumeric *1122.51429,
+                 weight = 2,
+                 color = ~pal(selectedHurricaneData$Status),
                  fillColor = ~pal(selectedHurricaneData$Status),
-                 label = ~selectedHurricaneData$Maximum.WindNumeric)
-    
-                 
-      
-                 
-      
-    
+                 label = paste("Year=", selectedHurricaneData$Year, "Month=", selectedHurricaneData$Month, "Day=", selectedHurricaneData$Day, "Time=", selectedHurricaneData$Time)
+      )
     
   })
   
