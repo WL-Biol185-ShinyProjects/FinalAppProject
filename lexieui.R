@@ -1,43 +1,59 @@
 library(shiny)
 library(shinydashboard)
+library(ggplot2)
+library(dplyr)
 
-# Define UI for hurricane app ----
-ui <- pageWithSidebar(
-  
   #Create dashboard 
-  dashboardPage(
-    dashboardHeader(),
-    dashboardSidebar(
+ui <- dashboardPage(skin = "purple",
+  
+    header <- dashboardHeader(
+      title = "History of Hurricanes"),
+    
+    sidebar <- dashboardSidebar(
       sidebarMenu(
-        menuItem("Dashboard", tabName = "dashboard"),
-        menuItem("Storm Map", tabName = "stormMap")
-         )
-      ),
+        menuItem("Intro to Storms", tabName = "dashboard"),
+        menuItem("Static Tracking Map", tabName = "stormMap"),
+        menuItem("Storm Frequency", tabName = "stormFreq"),
+        menuItem("Sources and Thank Yous", tabName = "sources"))),
     
-    title = "History of Hurricanes",
-    
-    dashboardBody(
-      tags$head(tags$style(HTML('
-      .main-header .logo {
-        font-family: "Georgia", Times, "Times New Roman", serif;
-        font-weight: bold;
-        font-size: 24px;
-      }
-    '))),
-      
+    body <- dashboardBody(
       tabItems(
         tabItem(tabName = "dashboard",
-                "In a state of growing knowledge and concern regarding climate change, our app allows users to visualize the direction and severity of major storms since 1850. It is our hope that with more data collected
-                    and visualizations such as ours, we will eventually be able to predict storms based on their origin and past conditions.
+              img(src = "Hurricane.jpg", height = 300, width = 300),
+              
+              hr(),
                 
-                Image credit to: http://discovermagazine.com/2019/july/ewk-hurricanes")
-        ),
-        
+              p("In a state of growing knowledge and concern regarding climate change, our app allows users to visualize the direction, severity, and frequency of major storms since 1850. It is our hope that with more data collected
+                    and visualizations such as ours, we will eventually be able to predict storms based on their origin and past storm conditions."),
+                    
+              br(),
+                
+              em("Image credit to: http://discovermagazine.com/2019/july/ewk-hurricanes")),
+      
         tabItem(tabName = "stormMap",
-                "Storm map tab content",
-                
-          ))))
+              p("Storm map content")),
+
+        tabItem(tabName = "stormFreq",
+            fluidPage(
+              titlePanel("Storm Frequency Visualization"),
+              sidebarLayout(
+              selectizeInput("stormType", label = "Select Storm Type", choices = unique(globalHurricane$Status),
+                multiple = TRUE, selected = "TS"),
+              sliderInput("stormYear", label = "Year", min = 1851, max = 2015 , value = 1851, animate = animationOptions(interval = 100, loop = FALSE))),
+              mainPanel(
+                plotOutput("stormBar")))),
     
+        tabItem(tabName = "sources",
+              strong("References"),
+              
+              br(),
+              
+              p("http://discovermagazine.com/2019/july/ewk-hurricanes"),
+              
+              br(),
+              
+              p("Most importantly, thank you to Dr. Gregg Whitworth for helping us through all our coding issues, big and small. We couldn't have made this without him!")))))
+
 
 
 shinyApp(ui, server)
