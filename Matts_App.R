@@ -47,12 +47,25 @@ server <- function(input, output) {
     
     filteredData <- globalHurricane %>% filter(Status == input$stormType & Year == input$stormYear) 
     
+    
     mergedfilteredData <- left_join(dfHolder, filteredData)
     
-    summaryTable <- mergedfilteredData %>% group_by(Month) %>% summarise(count = n_distinct(ID, na.rm= TRUE)) 
     
-    ggplot(summaryTable, aes(Month, count)) + geom_bar(stat = "identity") + coord_cartesian(ylim = c(0, 15)) + xlab("Month" ) + ylab("Number of Storms") + theme(axis.title.y = element_text(face="bold", size=14), 
-    axis.title.x = element_text(face = "bold", size = 14))
+    monthNames <- c("January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+    
+    
+    months <- factor(monthNames, levels = monthNames, ordered = TRUE)
+    
+    
+    mergedfilteredData$Month <- months[mergedfilteredData$Month]
+    
+    
+    summaryTable <- mergedfilteredData %>% group_by(Month) %>% summarise(count = n_distinct(ID, na.rm= TRUE))
+    
+
+    
+    ggplot(summaryTable, aes(Month, count)) + geom_bar(stat = "identity") + coord_cartesian(ylim = c(0, 15)) + xlab("Month" ) + ylab("Number of Storms") + theme(axis.title.y = element_text(face="bold", size=20), 
+    axis.title.x = element_text(face = "bold", size = 20))
   
   })
   
@@ -77,9 +90,9 @@ ui <- fluidPage(
     
     selectizeInput("stormType", label = "Select Storm Type", choices = unique(globalHurricane$Status),
                    
-                   multiple = TRUE, selected = "TS"),
+                   multiple = TRUE, selected ="TS"),
     
-    sliderInput("stormYear", label = "Year", min = 1851, max = 2015 , value = 1851, animate = animationOptions(interval = 100, loop = FALSE))),
+    sliderInput("stormYear", label = "Year", min = 1851, max = 2015 , value = 1851, animate = animationOptions(interval = 500, loop = FALSE))),
     
     
     mainPanel(
