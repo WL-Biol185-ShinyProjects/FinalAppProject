@@ -29,7 +29,7 @@ name_list_1967 <- read.csv("name_list_1967.csv")
       ),
               
       mainPanel(
-        plotOutput("staticMap")
+        leafletOutput("staticMap")
       )
   )
 )
