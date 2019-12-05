@@ -19,7 +19,7 @@ ui <- dashboardPage(skin = "purple",
     body <- dashboardBody(
       tabItems(
         tabItem(tabName = "dashboard",
-              img(src = "Hurricane.jpg", height = 300, width = 300),
+              img(src = "giphy.gif", height = 300, width = 600),
               
               hr(),
                 
@@ -28,7 +28,7 @@ ui <- dashboardPage(skin = "purple",
                     
               br(),
                 
-              em("Image credit to: http://discovermagazine.com/2019/july/ewk-hurricanes")),
+              em("Image credit to: https://giphy.com/gifs/hurricane-irma-njaAhQUJ8FGMws")),
       
         tabItem(tabName = "stormMap",
               p("Storm map content")),
@@ -48,7 +48,7 @@ ui <- dashboardPage(skin = "purple",
               
               br(),
               
-              p("http://discovermagazine.com/2019/july/ewk-hurricanes"),
+              p("https://giphy.com/gifs/hurricane-irma-njaAhQUJ8FGMws"),
               
               br(),
               
@@ -57,4 +57,3 @@ ui <- dashboardPage(skin = "purple",
 
 
 shinyApp(ui, server)
-
