@@ -1,38 +1,40 @@
 library(shiny)
 library(ggplot2)
-library(gganimate)
 library(tidyverse)
 library(lubridate) 
 library(ggmap)
 library(mapdata)
 library(maps)
 library(dplyr)
+library(leaflet)
 
-#loading relevant csv file
-name_list_1967 <- read.csv("name_list_1967.csv")
+  #loading relevant csv file
+  name_list_1967 <- read.csv("name_list_1967.csv")
 
-ui <- fluidPage(
+  ui <- fluidPage(
   
-  titlePanel("Mapping Individual Hurricanes by Path and Wind Speed"),
+    titlePanel("Mapping Individual Hurricanes by Path and Wind Speed"),
   
-  sidebarLayout(
+    sidebarLayout(
     
-    sidebarPanel(
+      sidebarPanel(
   
-      selectInput(
-          inputId = "selectedHurricane",
-          label = "Select a hurricane",
-          choices = unique(name_list_1967)
-                 ),
-      hr(),
-      helpText("Data from National Hurricane Center") 
-              ),
-              
-    mainPanel(
-      plotOutput("staticMap")
-           )
-  )
-)
+        selectInput(
+            inputId = "selectedHurricane",
+            label = "Select a hurricane",
+            choices = unique(name_list_1967$Name)
+          ), #closes out selectInput
+          hr(),
+          helpText("Data from National Hurricane Center")
+      ), #closes out sidebarPanel
+  
+        mainPanel(
+          leafletOutput("staticMap")
+        ) #closes out mainPanel
+    ) #closes out sidebarLayout
+  ) #closes out fluidPage 
+
+
 
 
 

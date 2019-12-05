@@ -4,22 +4,36 @@ library(tidyverse)
 library(dplyr)
 
 atlantic <- read.csv("atlantic.csv")
+
 pacific <- read.csv("pacific.csv")
 
 #merge the two data sets
 globalHurricane <- rbind(atlantic, pacific)
+  #adding Year, Month, and Day Column as Numeric values to "globalHurricane" dataframe. Import formatting is as a factor  
+  globalHurricane$DateStr <- as.character(globalHurricane$Date)
+  globalHurricane$yearStr <- substr(as.character(globalHurricane$Date), start = 1, stop = 4)
+  globalHurricane$monthStr <- substr(as.character(globalHurricane$Date), start = 5, stop = 6)
+  globalHurricane$dayStr <- substr(as.character(globalHurricane$Date), start = 7, stop = 8)
+  globalHurricane$Month <- as.numeric(globalHurricane$monthStr)
+  globalHurricane$Year <- as.numeric(globalHurricane$yearStr)
+  globalHurricane$Day <- as.numeric(globalHurricane$dayStr)
+  globalHurricane$yearStr <- NULL
+  globalHurricane$monthStr <- NULL 
+  globalHurricane$dayStr <- NULL
+  
+  #need to convert latitude and longitude into numeric values without NSEW in order for make_bbox to recognize them; realized they are all NW points so all longitudes just need to be turned negative and latitudes can remain the same
+  globalHurricane$LongitudeNumWrong <- as.numeric(substr(as.character(globalHurricane$Longitude), start = 1, stop =4))
+  globalHurricane$lon <-  globalHurricane$LongitudeNumWrong *-1
+  globalHurricane$Longitude <- NULL
+  
+  globalHurricane$lat <- as.numeric(substr(as.character(globalHurricane$Latitude), start = 1, stop =4))
+  globalHurricane$Latitude <-NULL
+  
+  #need to convert max windspeed as a numeric as well
+  globalHurricane$Maximum.WindNumeric <- as.numeric(globalHurricane$Maximum.Wind)
 
-#adding Year, Month, and Day Column as Numeric values to "globalHurricane" dataframe. Import formatting is as a factor  
-globalHurricane$DateStr <- as.character(globalHurricane$Date)
-globalHurricane$yearStr <- substr(as.character(globalHurricane$Date), start = 1, stop = 4)
-globalHurricane$monthStr <- substr(as.character(globalHurricane$Date), start = 5, stop = 6)
-globalHurricane$dayStr <- substr(as.character(globalHurricane$Date), start = 7, stop = 8)
-globalHurricane$Month <- as.numeric(globalHurricane$monthStr)
-globalHurricane$Year <- as.numeric(globalHurricane$yearStr)
-globalHurricane$Day <- as.numeric(globalHurricane$dayStr)
-globalHurricane$yearStr <- NULL
-globalHurricane$monthStr <- NULL 
-globalHurricane$dayStr <- NULL
+  
+  
 
 write.csv(globalHurricane, file = "globalHurricane.csv")
 
