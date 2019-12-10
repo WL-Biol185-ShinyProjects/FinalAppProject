@@ -51,9 +51,11 @@ server <- function(input, output) {
                 title = "Max. Wind Speed (m/s)",
                 opacity = 0.75)
   })
-}
+
 
 output$downloadHurricane <- downloadHandler( filename = function() { "globalhurricanes.csv" },
                                              content = function(file) { write.csv(globalHurricane, file)},
                                              contentType = "text/csv"
                                              )
+
+}
