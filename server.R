@@ -54,5 +54,6 @@ server <- function(input, output) {
 }
 
 output$downloadHurricane <- downloadHandler( filename = function() { "globalhurricanes.csv" },
-                                             content = function(file) { write.csv(globalHurricane, file)}
+                                             content = function(file) { write.csv(globalHurricane, file)},
+                                             contentType = "text/csv"
                                              )
