@@ -62,7 +62,10 @@ ui <- dashboardPage(skin = "purple",
         tabItem(tabName = "sources",
               strong("References"),
               br(),
-              p("https://giphy.com/gifs/hurricane-irma-njaAhQUJ8FGMws"),
+              a("Hurricane Image", href = "https://giphy.com/gifs/hurricane-irma-njaAhQUJ8FGMws"),
+              br(),
+              a("Hurricane Data", href = "https://www.nhc.noaa.gov/"),
+              downloadButton("downloadHurricane", "Download Merged Source Data"),
               br(),
               p("Most importantly, thank you to Dr. Gregg Whitworth for helping us through all our coding issues, big and small. 
                 We couldn't have made this without him!")))))

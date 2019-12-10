@@ -52,3 +52,7 @@ server <- function(input, output) {
                 opacity = 0.75)
   })
 }
+
+output$downloadHurricane <- downloadHandler(filename = function() { "globalhurricanes.csv"},
+                                             content = function(file) { write.csv(globalHurricane, file)}
+                                             )
