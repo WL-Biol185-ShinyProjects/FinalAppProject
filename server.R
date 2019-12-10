@@ -8,12 +8,12 @@ library(dplyr)
 library(leaflet)
 
 globalHurricane <- read.csv("globalHurricane.csv")
+name_list_1967 <- read.csv("name_list_1967.csv")
+
 dfHolder <- data.frame("Month" = c(1:12))
-write.csv(globalHurricane, file = "globalHurricane.csv")
 name_list_1967 <- globalHurricane %>%
   filter(Year > 1967) %>%
   filter(Name != "UNNAMED")
-write.csv(name_list_1967, file = "name_list_1967.csv")
 server <- function(input, output) {
   
   #ZEIKEL'S STUFF
